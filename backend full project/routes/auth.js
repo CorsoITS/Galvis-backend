@@ -23,14 +23,14 @@ routerAuth.post('/login', async (req, res) => {
 });
 
 routerAuth.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { ruolo, nome, cognome, username, password, sede_id} = req.body;
   if (password.length < 3) {
     return res.status(400).send({
       message: 'la password deve essere più lunga di 3 caratteri'
     })
   }
   const passwordHash = await hash(password, 10);
-  const re = await insertOperatore(username, passwordHash);
+  const re = await insertOperatore(ruolo, nome, cognome, username, passwordHash, sede_id);
   return res.json(re);
 })
 

@@ -13,13 +13,13 @@ async function controllaAutenticazione(req, res, next) {
       messaggio: 'metti header per bene per favore'
     })
   }
-  const utente_id = await validateToken(token)
-  if (!utente_id) {
+  const opertore_id = await validateToken(token)
+  if (!opertore_id) {
     return res.status(403).json({
       messaggio: 'token non valido'
     })
   }
-  req.utente_id = utente_id;
+  req.opertore_id = opertore_id;
   next();
   // Controlliamo in qualche modo il token
 }

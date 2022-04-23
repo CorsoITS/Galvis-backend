@@ -31,7 +31,7 @@ app.use('/', routerAuth);
 ConnectRouter(app);
 
 app.get('/operatore', controllaAutenticazione, async (req, res) => {
-    const operatore = await getOperatoreById(req.operatore_id)
+    const operatore = await getOperatoreById(req.opertore_id)
     return res.json(operatore.getPublicFields());
 });
 

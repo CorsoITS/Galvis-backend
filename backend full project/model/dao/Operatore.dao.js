@@ -3,21 +3,21 @@ const Operatore = require('../models/Operatore');
 
 async function getOperatoreByUsername(username) {
   const conn = await getConnection();
-  const [utenti] = await conn.query('SELECT * FROM operatore WHERE username = ?', [username]);
+  const [utenti] = await conn.query('SELECT * FROM opertore WHERE username = ?', [username]);
   return new Operatore(utenti[0]);
 }
 
 async function getOperatoreById(id) {
   const conn = await getConnection();
-  const [utenti] = await conn.query('SELECT * FROM operatore WHERE id = ?', [id]);
+  const [utenti] = await conn.query('SELECT * FROM opertore WHERE id = ?', [id]);
   return new Operatore(utenti[0]);
 }
 
-async function insertOperatore(username, passwordHash) {
+async function insertOperatore(ruolo, nome, cognome, username, passwordHash, sede_id) {
   const conn = await getConnection();
   const [insert] = await conn.query(
-    'INSERT INTO operatore (username, password) values (?, ?)',
-    [username, passwordHash]);
+    'INSERT INTO opertore (ruolo, nome, cognome, username, password, sede_id) values (?, ?, ?, ?, ?, ?)',
+    [ruolo, nome, cognome, username, passwordHash, sede_id]);
   return insert.insertId;
 }
 
