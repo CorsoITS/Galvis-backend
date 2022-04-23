@@ -7,7 +7,7 @@ const ConnectRouter = require ('./routes/main-router');
 const config =require ("config");
 const { logger } = require('./common/logging');
 const controllaAutenticazione = require('./common/check-auth');
-const { getOperatoreById } = require('./model/dao/operatore.dao');
+const { getOperatoreById, getOperatoreSede } = require('./model/dao/operatore.dao');
 const { routerAuth } = require('./routes/auth');
 
 console.log("Starting Application...");
@@ -21,18 +21,12 @@ app.use(urlencoded({ extended: true }));
 app.use(morgan('combined', { "stream": logger.httpStream }));
 app.set('view engine', 'ejs');
 app.options('*', cors());
-app.get('/', function (req, res) {
-    res.json({
-      messaggio: 'Ingresso delle api backend'
-    }).send()
-});
 
-app.use('/', routerAuth);
+// doesn't work
+app.get('/test', controllaAutenticazione, async (req, res) => {
+    const opertore = await getOperatoreSede(req.sede_id);
+    return res.json(opertore);
+});
 ConnectRouter(app);
-
-app.get('/operatore', controllaAutenticazione, async (req, res) => {
-    const operatore = await getOperatoreById(req.opertore_id)
-    return res.json(operatore.getPublicFields());
-});
 
 app.listen(9000);

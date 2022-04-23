@@ -3,11 +3,13 @@ const { compare, hash } = require('bcrypt');
 const { randomUUID } = require('crypto');
 const { getOperatoreByUsername, insertOperatore } = require('../model/dao/operatore.dao');
 const { persistToken } = require('../model/dao/token.dao');
+const { logger } = require('../common/logging');
 
 const routerAuth = Router();
 
 routerAuth.post('/login', async (req, res) => {
   const { username, password } = req.body
+  logger.debug ("Username and Password: ",req.body);
   const operatore = await getOperatoreByUsername(username);
   if (await compare(password, operatore.password)) {
     // è lui
