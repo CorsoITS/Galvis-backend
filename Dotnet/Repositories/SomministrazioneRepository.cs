@@ -92,7 +92,7 @@ public class SomministrazioneRepository
         var parameterData_somministrazione= new MySqlParameter()
         {
             ParameterName = "data_somministrazione",
-            DbType = System.Data.DbType.String,
+            DbType = System.Data.DbType.DateTime,
             Value = somministrazione.data_somministrazione
         };
         command.Parameters.Add(parameterData_somministrazione);
@@ -106,7 +106,7 @@ public class SomministrazioneRepository
         var parameterOpertore_id= new MySqlParameter()
         {
             ParameterName = "opertore_id",
-            DbType = System.Data.DbType.String,
+            DbType = System.Data.DbType.Int16,
             Value = somministrazione.opertore_id
         };
         command.Parameters.Add(parameterOpertore_id);
@@ -151,7 +151,7 @@ public class SomministrazioneRepository
         var parameterData_somministrazione= new MySqlParameter()
         {
             ParameterName = "data_somministrazione",
-            DbType = System.Data.DbType.String,
+            DbType = System.Data.DbType.DateTime,
             Value = somministrazione.data_somministrazione
         };
         command.Parameters.Add(parameterData_somministrazione);
@@ -165,7 +165,7 @@ public class SomministrazioneRepository
         var parameterOpertore_id= new MySqlParameter()
         {
             ParameterName = "opertore_id",
-            DbType = System.Data.DbType.String,
+            DbType = System.Data.DbType.Int16,
             Value = somministrazione.opertore_id
         };
         command.Parameters.Add(parameterOpertore_id);

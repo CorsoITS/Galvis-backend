@@ -22,7 +22,14 @@ public class SedeService
     {
         if (sedeRepository.GetSede(sede.id) == null)
         {   
-            return sedeRepository.Create(sede);
+            if ((sede.nome.Length == 0) || (sede.citta.Length == 0) || (sede.indirizzo.Length == 0))
+            {
+                return false;
+            }
+            else
+            {
+                return sedeRepository.Create(sede);
+            }
         }
         else
         {

@@ -22,7 +22,14 @@ public class PersonaService
     {
         if (personaRepository.GetPersona(persona.id) == null)
         {   
-            return personaRepository.Create(persona);
+            if ((persona.codice_fiscale.Length < 16) || (persona.nome.Length == 0) || (persona.cognome.Length == 0))
+            {
+                return false;
+            }
+            else
+            {
+                return personaRepository.Create(persona);
+            }
         }
         else
         {

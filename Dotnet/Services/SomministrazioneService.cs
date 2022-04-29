@@ -21,8 +21,15 @@ public class SomministrazioneService
     public bool Create(Somministrazione somministrazione)
     {
         if (somministrazioneRepository.GetSomministrazione(somministrazione.id) == null)
-        {   
-            return somministrazioneRepository.Create(somministrazione);
+        {
+            if ((somministrazione.vaccino.Length == 0) || (somministrazione.dose.Length == 0) || (somministrazione.data_somministrazione.Hour <= DateTime.Now.Hour))
+            {
+                return false;
+            }
+            else
+            {
+                return somministrazioneRepository.Create(somministrazione);
+            }
         }
         else
         {

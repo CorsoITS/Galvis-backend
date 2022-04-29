@@ -22,7 +22,14 @@ public class OperatoreService
     {
         if (operatoreRepository.GetOperatore(operatore.id) == null)
         {   
-            return operatoreRepository.Create(operatore);
+            if ((operatore.nome.Length == 0) || (operatore.cognome.Length == 0) || (operatore.username.Length == 0) || (operatore.password.Length == 0))
+            {
+                return false;
+            }
+            else
+            {
+                return operatoreRepository.Create(operatore);
+            }
         }
         else
         {
