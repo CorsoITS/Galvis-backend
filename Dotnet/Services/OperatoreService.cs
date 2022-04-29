@@ -7,6 +7,7 @@ public class OperatoreService
 {
     
     private OperatoreRepository operatoreRepository = new OperatoreRepository();
+    private SedeRepository sedeRepository = new SedeRepository();
 
     public IEnumerable<Operatore> GetOperatores()
     {
@@ -22,13 +23,18 @@ public class OperatoreService
     {
         if (operatoreRepository.GetOperatore(operatore.id) == null)
         {   
-            if ((operatore.nome.Length == 0) || (operatore.cognome.Length == 0) || (operatore.username.Length == 0) || (operatore.password.Length == 0))
+            if ((operatore.nome.Length == 0) || (operatore.cognome.Length == 0) || (operatore.username.Length == 0) || (operatore.password.Length == 0) )
             {
                 return false;
             }
             else
             {
-                return operatoreRepository.Create(operatore);
+                if (sedeRepository.GetSedeBool(operatore.sede_id)){
+                    return operatoreRepository.Create(operatore);
+                }
+                else {
+                    return false;
+                }
             }
         }
         else

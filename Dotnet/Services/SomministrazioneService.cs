@@ -7,6 +7,8 @@ public class SomministrazioneService
 {
     
     private SomministrazioneRepository somministrazioneRepository = new SomministrazioneRepository();
+    private OperatoreRepository operatoreRepository = new OperatoreRepository();
+    private PersonaRepository personaRepository = new PersonaRepository();
 
     public IEnumerable<Somministrazione> GetSomministraziones()
     {
@@ -18,24 +20,26 @@ public class SomministrazioneService
         return somministrazioneRepository.GetSomministrazione(id);
     }
 
-    public bool Create(Somministrazione somministrazione)
-    {
-        if (somministrazioneRepository.GetSomministrazione(somministrazione.id) == null)
-        {
-            if ((somministrazione.vaccino.Length == 0) || (somministrazione.dose.Length == 0) || (somministrazione.data_somministrazione.Hour <= DateTime.Now.Hour))
-            {
+    public bool Create(Somministrazione somministrazione){
+        if (somministrazioneRepository.GetSomministrazione(somministrazione.id) == null){
+            if (somministrazione.vaccino.Length > 0 & somministrazione.dose.Length > 0){
+                if(somministrazione.data_somministrazione <= DateTime.Now){
+                    if(operatoreRepository.GetOperatoreBool(somministrazione.opertore_id) & personaRepository.GetPersonaBool(somministrazione.persona_id)){
+                        return somministrazioneRepository.Create(somministrazione);
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+            else{
                 return false;
             }
-            else
-            {
-                return somministrazioneRepository.Create(somministrazione);
-            }
         }
-        else
-        {
+        else{
             return false;
         }
-
     }
 
     public bool Update(Somministrazione somministrazione)

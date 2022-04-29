@@ -40,7 +40,7 @@ public class OperatoreRepository
     {
         appDb.Connection.Open();
         var command = appDb.Connection.CreateCommand();
-        command.CommandText = "select * from opertore where id=@id";
+        command.CommandText = "select id, ruolo, nome, cognome, username, password, sede_id from opertore where id=@id";
         var parameter = new MySqlParameter()
         {
             ParameterName = "id",
@@ -68,6 +68,40 @@ public class OperatoreRepository
 
         appDb.Connection.Close();
         return null;
+    }
+
+    public bool GetOperatoreBool(int? id)
+    {
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select id, ruolo, nome, cognome, username, password, sede_id from opertore where id=@id";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "id",
+            DbType = System.Data.DbType.Int16,
+            Value = id
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var operatore = new Operatore()
+            {
+                id = reader.GetInt16("id"),
+                ruolo = reader.GetString("ruolo"),
+                nome = reader.GetString("nome"),
+                cognome = reader.GetString("cognome"),
+                username = reader.GetString("username"),
+                password = reader.GetString("password"),
+                sede_id = reader.GetInt16("sede_id"),
+            };
+            appDb.Connection.Close();
+            return true;
+        }
+
+        appDb.Connection.Close();
+        return false;
     }
 
     public bool Create(Operatore operatore)

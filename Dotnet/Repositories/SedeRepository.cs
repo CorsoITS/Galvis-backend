@@ -64,6 +64,38 @@ public class SedeRepository
         return null;
     }
 
+    public bool GetSedeBool(int? id)
+    {
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select id, nome, citta, indirizzo from sede where id=@id";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "id",
+            DbType = System.Data.DbType.Int16,
+            Value = id
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var sede = new Sede()
+            {
+                id = reader.GetInt16("id"),
+                nome = reader.GetString("nome"),
+                citta = reader.GetString("citta"),
+                indirizzo = reader.GetString("indirizzo"),
+            };
+            appDb.Connection.Close();
+            return true;
+        }
+
+        appDb.Connection.Close();
+        return false;
+    }
+
+
     public bool Create(Sede sede)
     {
         appDb.Connection.Open();
